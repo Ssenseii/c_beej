@@ -4,15 +4,15 @@
 
 int main(void)
 {
-
     char *s = "Hello Dumbass!";
     int count = 0;
 
     while(s[count] != '\0'){
-        count++;
+        count++;  
     }
 
     printf("count: %d", count);
+    
 
     return count;
 }

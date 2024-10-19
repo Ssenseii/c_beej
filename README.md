@@ -111,3 +111,59 @@ char *s = "Hello!";  // Actually "Hello!\0"
 this is how the program knows when to end the string.
 
 finding the string length is to count until we hit the /0.
+
+instead of t = s (it just creates an other pointer), use strcpy(t, s);
+
+## struct
+
+we have no objects or classes.
+we have structs.
+
+struct car {
+    char *name;
+    float price;
+    int speed;
+}
+
+struct car Ford.
+
+ford.name = "Fiesta".
+ford.price = 15000
+ford.speed = 170;
+or
+struct car Ford = {"Fiesta", 15000, 170}
+or
+struct car Ford = {.speed=15000, .name="Fiesta"}; // doesn't need order.
+
+to pass it to a function, you have two options:
+    - Pass the struct
+    - Pass a pointer to the struct
+
+You'd pass a pointer if
+    - You want to make changes to the struct.
+    - Struct is large and more expensive to copy
+
+void set_price(struct car *Car, float price){
+    car->price = price;
+}
+
+if you have a struct: use .
+if you have a pointer to a struct: use ->
+
+## File Input and Output
+
+FILE* Data type.
+it holds all info needed to communicate with the I/O subsystem.
+referred to as Streams.
+
+current streams:
+stdin: for the keyboard input
+stdout: for the screen
+
+printf("Hello Dumbass!");
+fprintf(stdout, "Hello Dumbass!"); same thing.
+
+streams are either "text" or "binary".
+
+general rule: if you are able to edit the file in a text editor, its a text file, otherise its binary
+
