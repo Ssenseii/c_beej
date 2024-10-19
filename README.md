@@ -167,3 +167,11 @@ streams are either "text" or "binary".
 
 general rule: if you are able to edit the file in a text editor, its a text file, otherise its binary
 
+for writing in files you can use
+fputs(char *s, fp);
+fprintf(fp, "%d", x);
+
+
+For Binaries:
+Add a b after "w" or "r" to write/read binary files.  
+fread() and fwrite() are your functions to operate on bytes.
