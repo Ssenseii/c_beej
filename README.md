@@ -1,6 +1,6 @@
 # Learning C the Beej Way
 
-[Beejs_Guide]{https://beej.us/guide/bgc/html/split/index.html}
+{Beejs_Guide}[https://beej.us/guide/bgc/html/split/index.html]
 
 ## Small things I should remember
 
@@ -287,3 +287,62 @@ int main(void)
 }
 ```
 
+## Memory Allocation
+
+Most languages have garbage collectors, reference counting...
+C doesn't.
+
+You can tell C to allocate a chunk of bytes from memory.
+and they will persist, until you free them
+if you don't, that's what we call a **Memory Leak**
+meaning the process will continue to allocate that memory until you close the program.
+
+Automatic Local Variables are allocated on "_the stack_",
+Manually Allocated Memory is allocated on "_the heap_".
+
+_If you manually allocated it, you have to manually free it when you’re done with it._
+
+### malloc() and free()
+
+_malloc_ accepts a number of bytes to allocate, returns a void pointer to that new block, meaning we can assign it any type we want.
+
+```
+int *p = malloc(sizeof(int));
+
+*p = 12;  // Store something there
+
+printf("%d\n", *p);  // Print it: 12
+
+free(p);  // All done with that memory
+
+```
+
+always check if it returns a NULL value
+
+```
+int *x = malloc(sizeof(*x));
+
+if(x == NULL){
+    printf("Error Allocating an int.\n");
+}
+```
+
+How to allocate space for an array?
+malloc(sizeof(type_of_elements) \* number_of_elements);
+
+difference between malloc and calloc?
+
+```
+// Allocate space for 10 ints with calloc(), initialized to 0:
+int *p = calloc(10, sizeof(int));
+
+// Allocate space for 10 ints with malloc(), initialized to 0:
+int *q = malloc(10 * sizeof(int));
+memset(q, 0, 10 * sizeof(int));   // set to 0
+```
+
+result is the same, except calloc initializes it with 0.
+
+realloc?
+you can reallocate memory using realloc byt giving it the allocated memory and the **number of bytes** needed:
+realloc(m, sizeof(int) * number_of_elements)
