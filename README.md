@@ -61,7 +61,7 @@ _okay just found out about the existence of virtual memory... moving on..._
 int i;      // declares an int
 int *p;     // declares a pointer to an int.
 
-p = &i;  // p is assigned the address of i--p now "points to" i
+p = &i;  // p is assigned the address of i -- p now "points to" i
 ```
 
 ### derefrencing pointers
@@ -69,7 +69,7 @@ p = &i;  // p is assigned the address of i--p now "points to" i
 okay, now we want to use the value that's being pointed at.
 that's called derefrencing a pointer.
 
-\*p is derefrencing p.
+" \*p is derefrencing p ".
 meaning that whatever p points at is being manipulated, in this case its i.
 
 As a general rule, if you want the function to modify the thing that you’re passing in such that you see the result, you’ll have to pass a pointer to that thing.
@@ -344,5 +344,81 @@ memset(q, 0, 10 * sizeof(int));   // set to 0
 result is the same, except calloc initializes it with 0.
 
 realloc?
-you can reallocate memory using realloc byt giving it the allocated memory and the **number of bytes** needed:
-realloc(m, sizeof(int) * number_of_elements)
+you can reallocate memory using realloc byt giving it the previously allocated memory and the **number of bytes** needed:
+realloc(m, sizeof(int) \* number_of_elements)
+
+**Alligned Memory :**
+
+okay, this is a lil too advanced considering we JUST learned how to allocate memory
+
+just remember: _Avoid needing to reallocate custom-aligned data._
+and you might need custom-aligned data when you're working with embeded-systems programming.
+
+## Scope
+
+What variables are visible in what context
+file scope = global scope??
+
+## Types II : More Types
+
+a signed type is anything that can be either positive or negative.
+unsigned: only hold positive numbers
+
+why unsigned? you can get larger numbers.
+
+char is a small int.
+char can either be signed or unsigned, you need to be specific about it.
+signed char's maximum is 127 and minimum is 128
+unsigned's max is 255.
+
+just keep the things in the range of char.
+
+<limits.h> defines the minimum and maximum values of these types.
+short int
+long int
+long long int
+
+Type                Min. Bytes     min             Max
+unsigned char   	    1	        0	    255
+unsigned short  	    2	        0	    65535
+unsigned int    	    2	        0	    65535
+unsigned long   	    4	        0	    4294967295
+unsigned long long	    8	        0	    18446744073709551615
+
+
+# Intermission - Practicing Pointers
+
+int *p 
+/// declaring a pointer of type int: it will hold an address
+
+int x = 10; p = &x;     
+/// we're assigning the pointer to x by giving it its address
+
+printf("%d\n", *p);
+/// we're derefrencing a pointer by using the * to access the value inside the address
+
+*p = 20;
+/// we're changing the value of x using its pointer
+
+int **pp = &p;
+/// this is a pointer that points to a pointer that has the address of x. 
+
+int *arr = (int*)malloc(5 * sizeof(int));
+/// we're trying to allocate a int type array of size 5 manually.
+
+*(arr + 2) = 50;
+/// arr[2] = 50
+
+void increment(int *n) { (*n)++; }
+increment(&x);
+/// we're creating a function that takes a pointer to an integer and increments it by 1.
+
+void (*funcPtr)(int*) = increment;
+funcPtr(&x);
+/// We're basically creating a pointer to a function by defining the type of param and result.
+*This can be useful for callbacks or when the function to call is determined at runtime.*
+
+struct Point { int x, y; };
+struct Point p1 = {3, 4}, *ptr = &p1;
+printf("%d\n", ptr->x);
+/// We create a struct, then we create a pointer to that struct, then we use it to access the x value.
