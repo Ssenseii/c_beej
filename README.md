@@ -385,8 +385,9 @@ unsigned int    	    2	        0	    65535
 unsigned long   	    4	        0	    4294967295
 unsigned long long	    8	        0	    18446744073709551615
 
+---
 
-# Intermission - Practicing Pointers
+***Intermission - Practicing Pointers***
 
 int *p 
 /// declaring a pointer of type int: it will hold an address
@@ -422,3 +423,42 @@ struct Point { int x, y; };
 struct Point p1 = {3, 4}, *ptr = &p1;
 printf("%d\n", ptr->x);
 /// We create a struct, then we create a pointer to that struct, then we use it to access the x value.
+
+---
+
+
+### Constant Numeric Types
+
+Hexadecimal and Octal:
+
+int a = 0xA12B
+printf("%x", a); /// prints "1a2b"
+
+int a = 012;
+printf("%o", a)  /// prints 12
+
+there's an unofficial extension in many C compilers that allows you to represent a binary number:
+
+int x = 0b101010;
+printf("%d/n", x); // prints 42;
+
+you can add types at the end of numbers to be more precise:
+long int x = 122L
+long long int x = 125L
+
+unsiffixed floats are actually double.
+so impend f at then end if you want it to force it to be a float.
+and a double has no suffix
+but long double: 
+long double x = 1234.564L
+
+you can print scientific notation using %e.
+
+
+double x = 0xa.1p3;
+printf("%a\n", x);  // 0x1.42p+6
+
+this is insanity we'll deal with later when we need to.
+
+## Conversions
+
