@@ -378,54 +378,53 @@ short int
 long int
 long long int
 
-Type                Min. Bytes     min             Max
-unsigned char   	    1	        0	    255
-unsigned short  	    2	        0	    65535
-unsigned int    	    2	        0	    65535
-unsigned long   	    4	        0	    4294967295
-unsigned long long	    8	        0	    18446744073709551615
+Type Min. Bytes min Max
+unsigned char 1 0 255
+unsigned short 2 0 65535
+unsigned int 2 0 65535
+unsigned long 4 0 4294967295
+unsigned long long 8 0 18446744073709551615
 
 ---
 
-***Intermission - Practicing Pointers***
+**_Intermission - Practicing Pointers_**
 
-int *p 
+int \*p
 /// declaring a pointer of type int: it will hold an address
 
-int x = 10; p = &x;     
+int x = 10; p = &x;  
 /// we're assigning the pointer to x by giving it its address
 
-printf("%d\n", *p);
-/// we're derefrencing a pointer by using the * to access the value inside the address
+printf("%d\n", _p);
+/// we're derefrencing a pointer by using the _ to access the value inside the address
 
-*p = 20;
+\*p = 20;
 /// we're changing the value of x using its pointer
 
-int **pp = &p;
-/// this is a pointer that points to a pointer that has the address of x. 
+int \*\*pp = &p;
+/// this is a pointer that points to a pointer that has the address of x.
 
-int *arr = (int*)malloc(5 * sizeof(int));
+int _arr = (int_)malloc(5 \* sizeof(int));
 /// we're trying to allocate a int type array of size 5 manually.
 
-*(arr + 2) = 50;
+\*(arr + 2) = 50;
 /// arr[2] = 50
 
 void increment(int *n) { (*n)++; }
 increment(&x);
 /// we're creating a function that takes a pointer to an integer and increments it by 1.
 
-void (*funcPtr)(int*) = increment;
+void (_funcPtr)(int_) = increment;
 funcPtr(&x);
 /// We're basically creating a pointer to a function by defining the type of param and result.
-*This can be useful for callbacks or when the function to call is determined at runtime.*
+_This can be useful for callbacks or when the function to call is determined at runtime._
 
 struct Point { int x, y; };
-struct Point p1 = {3, 4}, *ptr = &p1;
+struct Point p1 = {3, 4}, \*ptr = &p1;
 printf("%d\n", ptr->x);
 /// We create a struct, then we create a pointer to that struct, then we use it to access the x value.
 
 ---
-
 
 ### Constant Numeric Types
 
@@ -435,7 +434,7 @@ int a = 0xA12B
 printf("%x", a); /// prints "1a2b"
 
 int a = 012;
-printf("%o", a)  /// prints 12
+printf("%o", a) /// prints 12
 
 there's an unofficial extension in many C compilers that allows you to represent a binary number:
 
@@ -449,16 +448,39 @@ long long int x = 125L
 unsiffixed floats are actually double.
 so impend f at then end if you want it to force it to be a float.
 and a double has no suffix
-but long double: 
+but long double:
 long double x = 1234.564L
 
 you can print scientific notation using %e.
 
-
 double x = 0xa.1p3;
-printf("%a\n", x);  // 0x1.42p+6
+printf("%a\n", x); // 0x1.42p+6
 
 this is insanity we'll deal with later when we need to.
 
 ## Conversions
 
+Numeric to String: sprintf(s, 10, '%f', 3.12456);
+String to Numeric: atoi, atof; atol, atoll. (string to 'int', 'float'...)
+f = atof("123.12");
+strtoul("12312", NULL, 10) // base 10
+strtoul("1010", NULL, 2) // base 2, returns 10.
+
+Char to Number / Number to Char: you just add or substract '0'
+'6' - '0' = 6
+6 + '0' = 54 => printf("%c", 54) // gives '6';
+
+### casting
+
+_dont do unless absolutely necessary_
+int x = 10;
+long int y = (long int)x + 12; /// meaning we cast x to long int.
+
+```
+int compar(const void *elem1, const void *elem2)
+{
+    if (*((const int*)elem2) > *((const int*)elem1)) return 1;
+    if (*((const int*)elem2) < *((const int*)elem1)) return -1;
+    return 0;
+}
+```
