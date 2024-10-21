@@ -545,3 +545,22 @@ dont worry about it.
 
 **_Thread_local**
 we'll see more of this later when we talk about multithreading
+
+
+## On Building Bigger Projects:
+
+[Multi_File]{https://beej.us/guide/bgc/html/split/multifile-projects.html}
+or go look at the folder .multi_file in my coding c folder.
+also you'll definitely need make: choco install make.
+
+## The outside environment
+
+"dir" to list all the files in the current directory
+
+int main(int argc, char **argv) // this is to manipulate with the CMD argument
+./my_program arg1 arg2
+
+argv[argc] == NULL
+
+char a[] & char *a are the same thing.
+
