@@ -461,7 +461,7 @@ this is insanity we'll deal with later when we need to.
 ## Conversions
 
 Numeric to String: sprintf(s, 10, '%f', 3.12456);
-String to Numeric: atoi, atof; atol, atoll. (string to 'int', 'float'...)
+String to Numeric: atoi, atof, atol, atoll. (string to 'int', 'float'...)
 f = atof("123.12");
 strtoul("12312", NULL, 10) // base 10
 strtoul("1010", NULL, 2) // base 2, returns 10.
@@ -484,3 +484,64 @@ int compar(const void *elem1, const void *elem2)
     return 0;
 }
 ```
+
+## Type Qualifiers and storage class specifiers.
+
+**const**: you cannot change the variable.
+
+const int *p : changes the pointer, dosen't change the value.
+int const *p : same thing as above.
+
+int *const p: we cant modify p with pointer arithmetics, but value yes.
+const int *const p: we cant do shit with the pointer or the value inside.
+
+const int x = 20;
+int _p = &x;
+this will give a warning as the left is int _ and the right's const int \*
+
+**restrict**:
+if you use it correctly, you'll get performance gain;
+otherwise, undefined behavior.
+
+**volatile**:
+unlikely to use or deal wtih unless you're dealing with hardware
+volatile int \*p;
+
+**\_Atomic**
+we'll see uu later.
+
+**static** in block scope:
+that means that once initiated, it'll persist even if the function is closed
+
+```
+#include <stdio.h>
+
+void counter(void)
+{
+    static int count = 1;  // This is initialized one time
+
+    printf("This has been called %d time(s)\n", count);
+
+    count++;
+}
+
+int main(void)
+{
+    counter();  // "This has been called 1 time(s)"
+    counter();  // "This has been called 2 time(s)"
+    counter();  // "This has been called 3 time(s)"
+    counter();  // "This has been called 4 time(s)"
+}
+```
+
+**static** in file scope:
+basically, the variable isn't available outside the file.
+
+**extern** 
+allows us to pull variables from other files
+
+**register**
+dont worry about it.
+
+**_Thread_local**
+we'll see more of this later when we talk about multithreading
