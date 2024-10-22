@@ -553,7 +553,7 @@ we'll see more of this later when we talk about multithreading
 or go look at the folder .multi_file in my coding c folder.
 also you'll definitely need make: choco install make.
 
-## The outside environment
+## The Outside Environment
 
 "dir" to list all the files in the current directory
 
@@ -564,3 +564,37 @@ argv[argc] == NULL
 
 char a[] & char *a are the same thing.
 
+## The C PreProcessor
+
+**include**
+there are system header files and local system files.
+**define**
+this is to define a simple macro. #define HELLO "Hello World/n";
+
+**ifdef, elifdef, ifndef**
+#ifdef MODE_1
+    printf("This is mode 1\n");
+#elifdef MODE_2
+    printf("This is mode 2\n");
+#elifdef MODE_3
+    printf("This is mode 3\n");
+#else
+    printf("This is some other mode\n");
+#endif
+
+BUILT_IN macros: 
+    __DATE__: mm dd yyyy format.
+    __TIME__: hh:mm:ss format.
+    __FILE__: string containing this file's name
+    __LINE__: line number where this macro appears (589 in this case)
+    __func__: name of the function this appears in as a string 
+
+ASSERT(x<20, "x must be under 20");
+#error to throw an error
+
+```
+#ifndef __STDC_IEC_559__
+    #error I really need IEEE-754 floating point to compile. Sorry!
+#endif
+```
+'#' by itself does nothing so we use it for cosmetics
