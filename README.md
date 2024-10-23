@@ -537,15 +537,14 @@ int main(void)
 **static** in file scope:
 basically, the variable isn't available outside the file.
 
-**extern** 
+**extern**
 allows us to pull variables from other files
 
 **register**
 dont worry about it.
 
-**_Thread_local**
+**\_Thread_local**
 we'll see more of this later when we talk about multithreading
-
 
 ## On Building Bigger Projects:
 
@@ -557,12 +556,12 @@ also you'll definitely need make: choco install make.
 
 "dir" to list all the files in the current directory
 
-int main(int argc, char **argv) // this is to manipulate with the CMD argument
+int main(int argc, char \*\*argv) // this is to manipulate with the CMD argument
 ./my_program arg1 arg2
 
 argv[argc] == NULL
 
-char a[] & char *a are the same thing.
+char a[] & char \*a are the same thing.
 
 ## The C PreProcessor
 
@@ -573,21 +572,21 @@ this is to define a simple macro. #define HELLO "Hello World/n";
 
 **ifdef, elifdef, ifndef**
 #ifdef MODE_1
-    printf("This is mode 1\n");
+printf("This is mode 1\n");
 #elifdef MODE_2
-    printf("This is mode 2\n");
+printf("This is mode 2\n");
 #elifdef MODE_3
-    printf("This is mode 3\n");
+printf("This is mode 3\n");
 #else
-    printf("This is some other mode\n");
+printf("This is some other mode\n");
 #endif
 
-BUILT_IN macros: 
-    __DATE__: mm dd yyyy format.
-    __TIME__: hh:mm:ss format.
-    __FILE__: string containing this file's name
-    __LINE__: line number where this macro appears (589 in this case)
-    __func__: name of the function this appears in as a string 
+BUILT_IN macros:
+**DATE**: mm dd yyyy format.
+**TIME**: hh:mm:ss format.
+**FILE**: string containing this file's name
+**LINE**: line number where this macro appears (589 in this case)
+**func**: name of the function this appears in as a string
 
 ASSERT(x<20, "x must be under 20");
 #error to throw an error
@@ -597,4 +596,174 @@ ASSERT(x<20, "x must be under 20");
     #error I really need IEEE-754 floating point to compile. Sorry!
 #endif
 ```
+
 '#' by itself does nothing so we use it for cosmetics
+
+## structs II: More Fun
+
+you can do a lot of things with structs
+
+struct object x = {.a = 12, .b=13};
+
+nested structs:
+
+struct spaceship {
+char \* manufacturer;
+struct cabin_information ci;
+}
+
+struct space ship {
+.manufacturer="WALLE-CORP";
+.ci.window_count = 8;
+.ci.window_o2level = 21;
+}
+
+you can also do arrays of structs
+
+```
+struct passenger {
+    char *name;
+    int covid_vaccinated; // Boolean
+};
+
+#define MAX_PASSENGERS 8
+
+struct spaceship {
+    char *manufacturer;
+    struct passenger passenger[MAX_PASSENGERS];
+};
+
+
+struct spaceship s = {
+    .manufacturer="General Products",
+    .passenger = {
+        // Initialize a field at a time
+        [0].name = "Gridley, Lewis",
+        [0].covid_vaccinated = 0,
+        // Or all at once
+        [7] = {.name="Brown, Teela", .covid_vaccinated=1},
+    }
+};
+```
+
+### Linked List in C
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+int main(void)
+{
+    struct node *head;
+
+    // Hackishly set up a linked list (11)->(22)->(33)
+    head = malloc(sizeof(struct node));
+    head->data = 11;
+    head->next = malloc(sizeof(struct node));
+    head->next->data = 22;
+    head->next->next = malloc(sizeof(struct node));
+    head->next->next->data = 33;
+    head->next->next->next = NULL;
+
+    // Traverse it
+    for (struct node *cur = head; cur != NULL; cur = cur->next) {
+        printf("%d\n", cur->data);
+    }
+}
+```
+
+padding bytes:
+C can add padding to structs to make it more performant,
+
+bitfields:
+lets say we know that a and b are going to take up 5 bits while c and d will take only 3 bits
+a normal a b c d struct will have 16 bytes (128 bits) reserved
+
+we use bitfields for more detailed memory management then
+struct foo {
+unsigned int a:5;
+unsigned int b:5;
+unsigned int c:3;
+unsigned int d:3;
+};
+
+but if the bitfields are seperated, it won't work as it should and will go with normal functionality
+
+// this won't work
+struct foo {
+unsigned int a:1;
+unsigned int b;
+unsigned int c:1;
+unsigned int d;
+};
+
+// this will work
+struct foo {
+unsigned int a:1;
+unsigned int c:1;
+unsigned int b;
+unsigned int d;
+};
+
+you can use an unsigned int :0 to seperate groups;
+like telling the compiler that we're done with this group of bits and starting a new one.
+
+### unions
+
+union foo {
+int a, b, c, d, e, f;
+float g, h;
+char i, j, k, l;
+};
+
+the size of this union is the size of the biggest element: int - 4 bytes.
+the downside is that you can only use one field at a time.
+
+but if you really know what you're doing, you can do type punning.
+
+how to use pointers with unions you ask?
+
+```
+#include <stdio.h>
+
+union foo {
+    int a, b, c, d, e, f;
+    float g, h;
+    char i, j, k, l;
+};
+
+int main(void)
+{
+    union foo x;
+
+    int *foo_int_p = (int *)&x;
+    float *foo_float_p = (float *)&x;
+
+    x.a = 12;
+    printf("%d\n", x.a);           // 12
+    printf("%d\n", *foo_int_p);    // 12, again
+
+    x.g = 3.141592;
+    printf("%f\n", x.g);           // 3.141592
+    printf("%f\n", *foo_float_p);  // 3.141592, again
+}
+```
+
+you can use unnamed structs inside unions to use them
+
+```
+union foo {
+    struct {       // unnamed!
+        int x, y;
+    } a;
+
+    struct {       // unnamed!
+        int z, w;
+    } b;
+};
+```
