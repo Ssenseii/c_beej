@@ -1,4 +1,0 @@
-1
-ID: 41, Name: Simon, Age: 12, GPA: 12.00
-ID: 41, Name: Simon, Age: 12, GPA: 12.00
-ID: 41, Name: Simon, Age: 12, GPA: 12.00
