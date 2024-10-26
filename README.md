@@ -767,3 +767,39 @@ union foo {
     } b;
 };
 ```
+
+## Enum
+
+```
+enum {
+  ONE=1,
+  TWO=2
+};
+
+printf("%d %d", ONE, TWO);
+```
+
+- enums can only be integers.
+- enums are automatically numbered.
+- enums are a type
+
+```
+enum {
+  A,    // 0, default starting value
+  B,    // 1
+  C=4,  // 4, manually set
+  D,    // 5
+  E,    // 6
+  F=3   // 3, manually set
+  G,    // 4
+  H     // 5
+}
+```
+
+## Bitwise Operations
+
+AND: a = b & c;
+OR: a = b | c;
+XOR: a = b ^ c;
+NOT: a = ~c;
+
