@@ -803,3 +803,23 @@ OR: a = b | c;
 XOR: a = b ^ c;
 NOT: a = ~c;
 
+
+Shift left: a = b << c || a >>= c
+Shift right: a = b >> c || a <<= c
+
+Watch out for Undefined Behavior with shifting
+- must be an integer
+- must be a positive number
+- new bits are filled with zeros
+- no shifts larger than the left operand.
+
+
+## Variadic functions
+
+void function(int a, ...)
+
+you need to import <stdarg.h>
+and you will be using va_list as a type for the arguments list
+always va_start(variable) from the argument right behind the ... in our case a
+always add va_end with va after the operation is finished.
+
