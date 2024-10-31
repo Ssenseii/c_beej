@@ -1,6 +1,6 @@
 # Learning C the Beej Way
 
-{Beejs_Guide}[https://beej.us/guide/bgc/html/split/index.html]
+(BEEJ)[https://beej.us/guide/bgc/html/split/index.html]
 
 ## Small things I should remember
 
